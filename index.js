@@ -2,6 +2,7 @@ const { createInterface } = require('node:readline');
 const { execSync } = require('child_process');
 const fetch = require('node-fetch');
 const { Client, Routes } = require('discord.js');
+const keep_alive = require('./keep_alive.js');
 
 const ping = {
   name: 'ping',
@@ -34,7 +35,7 @@ client.on('interactionCreate', (interaction) => {
 
 const question = (q) => new Promise((resolve) => rl.question(q, resolve));
 (async ()=>{
-  const token = await question('Application token? ');
+  const token = process.env['token']
   if(!token) throw new Error('Invalid token');
 
   const ratelimitTest = await fetch(`https://discord.com/api/v9/invites/discord-developers`);
